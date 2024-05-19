@@ -14,7 +14,7 @@ function Header() {
     <header>
       <div className="flex flex-col md:flex-row items-center justify-between p-5 bg-gray-500/10 rounded-b-2xl">
         <div className="absolute w-full top-0 left-0 h-96 bg-gradient-to-r from-[#12C2E9] to-[#F64F59] filter blur-3xl -z-50 opacity-50" />
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer" onClick={()=> setSearchString("")}>
           <Image
             src={logo}
             alt="trello logo"
@@ -44,18 +44,15 @@ function Header() {
             className="p-3 ms-3 text-white rounded-full bg-[#0055D1] 
         "
           >
-            US
+            AP
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center px-5 py-3 md:py-5  ">
-        <p className="text-[#0055D1] bg-white font-light shadow-xl rounded-xl p-5 md:w-2/4 italic">
-          <UserCircleIcon className="inline-block text-[#0055D1] w-9 mr-2" />
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque non
-          cumque hic, iusto deleniti in quam, debitis modi, minus earum? Est,
-          ducimus?
-        </p>
-      </div>
+    <div className=" p-4 flex md:m-2 md:mx-5 mx-2 rounded-lg justify-center items-center mb-5 bg-white/55">
+      <h2 className=" font-bold text-2xl text-gray-800 ">Project Management</h2>
+      <span className="ms-6 bg-white text-gray-800 px-2 py-1 rounded-lg text-sm font-semibold" >Template</span>
+    </div>
+
     </header>
   );
 }

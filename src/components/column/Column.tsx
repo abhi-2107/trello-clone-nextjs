@@ -5,7 +5,7 @@ import TodoCard from "../todocard/TodoCard";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useBoardStore } from "../../../store/BoardStore";
 import { Button, Textarea } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   id: TypedColumn;
@@ -24,10 +24,27 @@ const idToColumnText: {
 function Column({ id, todos, index }: Props) {
   const [showAddTitle, setShowAddTitle] = useState(false);
   const [addTitleValue, setAddTitleValue] = useState("");
-  const [searchString,addTask] = useBoardStore((state) => [state.searchString, state.addTask]);
+  const [addTitleLoading, setAddTitleLoading] = useState(false)
+  const [searchString,addTask,getBoard] = useBoardStore((state) => [state.searchString, state.addTask, state.getBoard]);
   
-  const handleSubmit = () =>{
-    
+ useEffect(()=>{
+  getBoard();
+  
+
+ },[showAddTitle])
+
+
+  const handleSubmit = async (columnId:TypedColumn) =>{
+    setAddTitleLoading(true)
+    const todoObj:Partial<Todo> = {
+      title: addTitleValue,
+      status: columnId
+    }
+    console.log(columnId)
+  await addTask(todoObj,columnId)
+    setAddTitleValue("")
+    setAddTitleLoading(false)
+    setShowAddTitle(false)
   }
   return (
     <Draggable draggableId={id} index={index}>
@@ -43,7 +60,7 @@ function Column({ id, todos, index }: Props) {
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className={`p-2 py-3  rounded-2xl shadow-sm ${
+                className={`p-2 py-3  rounded-2xl shadow-sm border border-stone-400  ${
                   snapshot.isDraggingOver ? "bg-blue-100" : "bg-white/55"
                 }`}
               >
@@ -104,10 +121,10 @@ function Column({ id, todos, index }: Props) {
                         <div className="my-3 flex">
                           <Button
                           type="submit"
-                          onClick={handleSubmit}
-                          disabled={!addTitleValue}
+                          onClick={() => handleSubmit(id)}
+                          disabled={!addTitleValue || addTitleLoading}
                           className="rounded bg-[#0055D1] py-2 px-4 text-lg font-medium text-white data-[hover]:bg-blue-800 shadow-sm disabled:bg-slate-500">
-                            Add card
+                            { addTitleLoading ? "Adding..." : "Add card"}
                           </Button>
                           <XMarkIcon
                             className="w-11  hover:bg-zinc-200 ms-2 p-2"

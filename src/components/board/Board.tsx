@@ -30,7 +30,8 @@ function Board() {
     const { destination, source, type } = result;
 
     // console.log(source,destination,type)
-    if (!result.destination) return;
+    if(!destination) return;
+    // if (!result.destination) return;
 
     // handle column drag
     if (type == "column") {
@@ -44,8 +45,8 @@ function Board() {
     // handle individual cards drop, indexes are stored as 0,1,2,3 so we need to change them to numbers to make array manipulations
     const columns = Array.from(board.columns.entries());
     const startColIndex = columns[Number(source.droppableId)];
-    const finishColIndex = columns[Number(destination.droppableId)];
-
+    const finishColIndex = columns[Number(destination?.droppableId)];
+    debugger;
     const startCol: Column = {
       id: startColIndex[0],
       todos: startColIndex[1].todos,

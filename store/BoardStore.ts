@@ -10,7 +10,7 @@ interface BoardState {
   searchString: string;
   setSearchString: (searchString: string) => void;
   deleteTask:(taskIndex:number,todoId:Todo,id: TypedColumn) => void;
-  addTask : (todo: Todo, columnId: TypedColumn) => void;
+  addTask : (todo: Partial<Todo>, columnId: TypedColumn) => void;
 }
 
 const useBoardStore = create<BoardState>((set,get) => ({
@@ -81,10 +81,7 @@ const useBoardStore = create<BoardState>((set,get) => ({
         process.env.NEXT_PUBLIC_DATABASE_ID!,
         process.env.NEXT_PUBLIC_TODOS_COLLECTION_ID!,
         ID.unique(),
-        {
-          title: todo,
-          status: columnId,
-        }
+        todo,
       );
       console.log('todo added successful', response);
     } catch (error) {
