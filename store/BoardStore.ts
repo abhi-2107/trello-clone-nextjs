@@ -64,9 +64,7 @@ const useBoardStore = create<BoardState>((set,get) => ({
     newColumns.get(id)?.todos.splice(taskIndex,1)
     set({board: {columns : newColumns}})
 
-    if(todo.image){
-      await storage.deleteFile(todo.image.bucketId, todo.image.fileId);
-    }
+
     await databases.deleteDocument(
       process.env.NEXT_PUBLIC_DATABASE_ID!,
       process.env.NEXT_PUBLIC_TODOS_COLLECTION_ID!,
