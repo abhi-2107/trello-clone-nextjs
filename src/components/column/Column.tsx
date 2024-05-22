@@ -77,7 +77,7 @@ function Column({ id, todos, index }: Props) {
                   </span>
                 </h2>
 
-                <div className="space-y-2">
+                <div className="space-y-2 max-h-80 overflow-y-scroll">
                   {todos.map((todo, index) => {
                     if (
                       !searchString ||
@@ -92,6 +92,7 @@ function Column({ id, todos, index }: Props) {
                           index={index}
                         >
                           {(provided) => (
+
                             <TodoCard
                               todo={todo}
                               index={index}
