@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useBoardStore } from "../../../store/BoardStore";
 import Column from "@/components/column/Column";
-import { ArrowPathIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 function Board() {
   const [loading, setLoading] = useState(true);

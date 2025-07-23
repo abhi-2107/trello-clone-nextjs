@@ -33,7 +33,7 @@ function Column({ id, todos, index }: Props) {
 
   useEffect(() => {
     getBoard();
-  }, [getBoard]);
+  }, [getBoard,showAddTitle]);
 
   const handleSubmit = async (columnId: TypedColumn) => {
     setAddTitleLoading(true);
