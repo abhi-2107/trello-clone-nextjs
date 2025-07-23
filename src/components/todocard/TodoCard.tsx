@@ -30,7 +30,7 @@ function TodoCard({
       {...draggableProps}
       {...dragHandleProps}
       ref={innerRef}
-      className="bg-white space-y-2 drop-shadow-sm hover:shadow-red-900 p-3 rounded-xl border-4 hover:border-blue-500 "
+      className="bg-white space-y-2 drop-shadow-sm hover:shadow-red-900 p-3 rounded-xl border-2 hover:border-blue-500 "
     >
       <div className="flex justify-between items-center text-lg  text-slate-950 ">
         <p>{todo.title}</p>

@@ -24,28 +24,29 @@ const idToColumnText: {
 function Column({ id, todos, index }: Props) {
   const [showAddTitle, setShowAddTitle] = useState(false);
   const [addTitleValue, setAddTitleValue] = useState("");
-  const [addTitleLoading, setAddTitleLoading] = useState(false)
-  const [searchString,addTask,getBoard] = useBoardStore((state) => [state.searchString, state.addTask, state.getBoard]);
-  
- useEffect(()=>{
-  getBoard();
-  
+  const [addTitleLoading, setAddTitleLoading] = useState(false);
+  const [searchString, addTask, getBoard] = useBoardStore((state) => [
+    state.searchString,
+    state.addTask,
+    state.getBoard,
+  ]);
 
- },[showAddTitle])
+  useEffect(() => {
+    getBoard();
+  }, [getBoard]);
 
-
-  const handleSubmit = async (columnId:TypedColumn) =>{
-    setAddTitleLoading(true)
-    const todoObj:Partial<Todo> = {
+  const handleSubmit = async (columnId: TypedColumn) => {
+    setAddTitleLoading(true);
+    const todoObj: Partial<Todo> = {
       title: addTitleValue,
-      status: columnId
-    }
-    console.log(columnId)
-  await addTask(todoObj,columnId)
-    setAddTitleValue("")
-    setAddTitleLoading(false)
-    setShowAddTitle(false)
-  }
+      status: columnId,
+    };
+    console.log(columnId);
+    await addTask(todoObj, columnId);
+    setAddTitleValue("");
+    setAddTitleLoading(false);
+    setShowAddTitle(false);
+  };
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -61,12 +62,12 @@ function Column({ id, todos, index }: Props) {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 className={`p-2 py-3  rounded-2xl shadow-sm border border-stone-400  ${
-                  snapshot.isDraggingOver ? "bg-blue-100" : "bg-white/55"
+                  snapshot.isDraggingOver ? "bg-blue-100 shadow-lg shadow-blue-400" : "bg-white/55"
                 }`}
               >
                 <h2 className="flex justify-between p-2 text-xl font-bold">
                   {idToColumnText[id]}{" "}
-                  <span className="p-1 mb-2 text-gray-500 rounded-full text-sm font-normal bg-gray-200">
+                  <span className="p-1 mb-2 w-5 h-5 inline-flex justify-center items-center text-gray-500 rounded-full text-sm font-normal bg-gray-200">
                     {!searchString
                       ? todos.length
                       : todos.filter((todo) =>
@@ -77,7 +78,7 @@ function Column({ id, todos, index }: Props) {
                   </span>
                 </h2>
 
-                <div className="space-y-2 max-h-80 overflow-y-scroll">
+                <div className="space-y-1 max-h-[calc(60vh)] overflow-y-auto [scrollbar-width:thin]  ">
                   {todos.map((todo, index) => {
                     if (
                       !searchString ||
@@ -92,7 +93,6 @@ function Column({ id, todos, index }: Props) {
                           index={index}
                         >
                           {(provided) => (
-
                             <TodoCard
                               todo={todo}
                               index={index}
@@ -110,8 +110,7 @@ function Column({ id, todos, index }: Props) {
                   {provided.placeholder}
                   <div>
                     {showAddTitle ? (
-                      <div className="flex flex-col mx-1">
-                        
+                      <div className="flex flex-col  mx-1">
                         <Textarea
                           name="descripton"
                           value={addTitleValue}
@@ -121,15 +120,19 @@ function Column({ id, todos, index }: Props) {
                         ></Textarea>
                         <div className="my-3 flex">
                           <Button
-                          type="submit"
-                          onClick={() => handleSubmit(id)}
-                          disabled={!addTitleValue || addTitleLoading}
-                          className="rounded bg-[#0055D1] py-2 px-4 text-lg font-medium text-white data-[hover]:bg-blue-800 shadow-sm disabled:bg-slate-500">
-                            { addTitleLoading ? "Adding..." : "Add card"}
+                            type="submit"
+                            onClick={() => handleSubmit(id)}
+                            disabled={!addTitleValue || addTitleLoading}
+                            className="rounded bg-[#0055D1] py-2 px-4 text-lg font-medium text-white data-[hover]:bg-blue-800 shadow-sm disabled:bg-slate-500"
+                          >
+                            {addTitleLoading ? "Adding..." : "Add card"}
                           </Button>
                           <XMarkIcon
                             className="w-11  hover:bg-zinc-200 ms-2 p-2"
-                            onClick={() => {setShowAddTitle(false); setAddTitleValue("")} }
+                            onClick={() => {
+                              setShowAddTitle(false);
+                              setAddTitleValue("");
+                            }}
                           ></XMarkIcon>
                         </div>
                       </div>
